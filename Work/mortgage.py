@@ -19,7 +19,7 @@ while principal > 0:
         principal = principal * (1 + rate/12) - payment - pagamento_extra
         total_paid = total_paid + payment + pagamento_extra
     else:
-        principal = principal * (1 + rate/12) - payment     
+        principal = principal * (1 + rate/12) - payment 
         total_paid = total_paid + payment
     print(f"{numero_meses_pagamento:10d} {total_paid:10.2f} {principal:10.2f}")
 
