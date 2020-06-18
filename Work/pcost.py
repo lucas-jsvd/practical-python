@@ -9,15 +9,16 @@ def portfolio_cost(filename):
     compras_totais = 0.0
     with open(filename, "rt") as arquivo:
         csvfile = csv.reader(arquivo)
-        next(csvfile)
-        for linha in csvfile:
+        headers = next(csvfile)
+        for num_linha, linha in enumerate(csvfile, start=1):
+            record = dict(zip(headers, linha))
             try:
-                quant_acao = int(linha[1])
-                preco_acao = float(linha[2])
+                quant_acao = int(record["shares"])
+                preco_acao = float(record["price"])
+                valor_total_acao = quant_acao * preco_acao
+                compras_totais += valor_total_acao
             except ValueError:
-                print("Existem valores vazios ou passados em um formato incorreto.")
-            valor_total_acao = quant_acao * preco_acao
-            compras_totais += valor_total_acao
+                print(f'Row {num_linha}: Couldn\'t convert: {linha}')
     return compras_totais
 
 
