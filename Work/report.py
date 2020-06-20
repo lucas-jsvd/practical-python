@@ -30,18 +30,6 @@ def read_prices(filename):
     return acoes
 
 
-def ganhos_perda(portfolio, acoes):
-    diferencia_total = 0.0
-    print("Nome\tPreco Compra\tQuantidade\tTotal da Compra\t\tPreco de Venda\t\tTotal de Venda\t\tGanho/Perda")
-    for acao in portfolio:
-        valor_acao_compra = acao["shares"] * acao["price"]
-        valor_acao_atual = acao["shares"] * float(acoes[acao["name"]])
-        diferencia = valor_acao_atual - valor_acao_compra
-        diferencia_total += diferencia
-        print(f'{acao["name"]:<4s} {acao["price"]:^16.2f} {acao["shares"]:^16d} {valor_acao_compra:^18.2f} {acoes[acao["name"]]:^26.2f} {valor_acao_atual:^21.2f} {diferencia:^21.2f}')
-    print(f"Total de ganhos/perdas: {diferencia_total:>97.2f}")
-
-
 def make_report(portfolio, acoes):
     lista_acoes = []
     for linha in portfolio:
@@ -50,9 +38,17 @@ def make_report(portfolio, acoes):
     return lista_acoes
 
 
-report = make_report(read_portfolio("Work\\Data\\portfoliodate.csv"), read_prices("Work\\Data\\prices.csv"))
-cabecalho = ("Name", "Shares", "Price", "Change")
-print(f'{cabecalho[0]:>10s} {cabecalho[1]:>10s} {cabecalho[2]:>10s} {cabecalho[3]:>10s}')
-print("---------- " * 4)
-for name, shares, price, change in report:
-    print(f'{name:>10s} {int(shares):>10d} {price:>10.2f} {change:>10.2f}')
+def print_report(report):
+    cabecalho = ("Name", "Shares", "Price", "Change")    
+    print(f'{cabecalho[0]:>10s} {cabecalho[1]:>10s} {cabecalho[2]:>10s} {cabecalho[3]:>10s}')
+    print("---------- " * 4)
+    for name, shares, price, change in report:
+        print(f'{name:>10s} {int(shares):>10d} {price:>10.2f} {change:>10.2f}')
+
+
+def portfolio_report(portfolio_filename, price_filename):
+    report = make_report(read_portfolio(portfolio_filename),read_prices(price_filename))
+    print_report(report)
+
+
+portfolio_report("Work\\Data\\portfoliodate.csv", "Work\\Data\\prices.csv")
