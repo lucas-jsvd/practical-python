@@ -2,12 +2,11 @@
 #
 # Exercise 2.4
 from fileparse import parse_csv
+import sys
 
 
 def make_report(portfolio, acoes):
     lista_acoes = []
-    print(portfolio)
-    print(acoes)
     for linha in portfolio:
         diferencia_preco = acoes[linha["name"]] - (linha["price"])
         lista_acoes.append((linha["name"], linha["shares"], acoes[linha["name"]], diferencia_preco))
@@ -27,4 +26,9 @@ def portfolio_report(portfolio_filename, price_filename):
     print_report(report)
 
 
-portfolio_report("Data\\portfoliodate.csv", "Data\\prices.csv")
+def main(args):
+    portfolio_report(args[1], args[2])
+
+
+if __name__ == "__main__":
+    main(sys.argv)
