@@ -7,8 +7,9 @@ import sys
 
 def portfolio_cost(filename):
     compras_totais = 0.0
-    csvfile = parse_csv(filename, select=["shares", "price"], types=[int, float])
-    compras_totais = sum([(acao["shares"] * acao["price"]) for acao in csvfile])
+    with open(filename, "rt") as f:
+        csvfile = parse_csv(f, select=["shares", "price"], types=[int, float])
+        compras_totais = sum([(acao["shares"] * acao["price"]) for acao in csvfile])
     return compras_totais
 
 

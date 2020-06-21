@@ -5,6 +5,18 @@ from fileparse import parse_csv
 import sys
 
 
+def read_portfolio(filename):
+    with open(filename, "rt") as f:
+        portifolio = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
+    return portifolio
+
+
+def read_prices(filename):
+    with open(filename, "rt") as f:
+        price = dict(parse_csv(f, has_headers=False, types=[str, float]))
+    return price
+
+
 def make_report(portfolio, acoes):
     lista_acoes = []
     for linha in portfolio:
@@ -22,7 +34,7 @@ def print_report(report):
 
 
 def portfolio_report(portfolio_filename, price_filename):
-    report = make_report(parse_csv(portfolio_filename, select=["name", "shares", "price"], types=[str, int, float]), dict(parse_csv(price_filename, has_headers=False, types=[str, float])))
+    report = make_report(read_portfolio(portfolio_filename), read_prices(price_filename))
     print_report(report)
 
 
