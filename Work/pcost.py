@@ -1,6 +1,7 @@
 # pcost.py
 #
 # Exercise 1.27
+from stock import Stock
 from fileparse import parse_csv
 import sys
 
@@ -8,8 +9,9 @@ import sys
 def portfolio_cost(filename):
     compras_totais = 0.0
     with open(filename, "rt") as f:
-        csvfile = parse_csv(f, select=["shares", "price"], types=[int, float])
-        compras_totais = sum([(acao["shares"] * acao["price"]) for acao in csvfile])
+        lista_dict = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
+        lista_obj = [Stock(dici["name"], dici["shares"], dici["price"]) for dici in lista_dict]
+        compras_totais = sum([obj.cost() for obj in lista_obj])
     return compras_totais
 
 

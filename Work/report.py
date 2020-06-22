@@ -1,14 +1,16 @@
 # report.py
 #
 # Exercise 2.4
+from stock import Stock
 from fileparse import parse_csv
 import sys
 
 
 def read_portfolio(filename):
     with open(filename, "rt") as f:
-        portifolio = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
-    return portifolio
+        portfolio_dict = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
+        portfolio_classe = [Stock(row["name"], row["shares"], row["price"]) for row in portfolio_dict]
+    return portfolio_classe
 
 
 def read_prices(filename):
@@ -17,11 +19,11 @@ def read_prices(filename):
     return price
 
 
-def make_report(portfolio, acoes):
+def make_report(portfolio, precos):
     lista_acoes = []
-    for linha in portfolio:
-        diferencia_preco = acoes[linha["name"]] - (linha["price"])
-        lista_acoes.append((linha["name"], linha["shares"], acoes[linha["name"]], diferencia_preco))
+    for acao in portfolio:
+        diferencia_preco = precos[acao.name] - (acao.price)
+        lista_acoes.append((acao.name, acao.shares, precos[acao.name], diferencia_preco))
     return lista_acoes
 
 
