@@ -11,7 +11,7 @@ def portfolio_cost(filename):
     with open(filename, "rt") as f:
         lista_dict = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
         lista_obj = [Stock(dici["name"], dici["shares"], dici["price"]) for dici in lista_dict]
-        compras_totais = sum([obj.cost() for obj in lista_obj])
+        compras_totais = sum([obj.cost for obj in lista_obj])
     return compras_totais
 
 
