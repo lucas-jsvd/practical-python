@@ -4,15 +4,15 @@
 from stock import Stock
 from fileparse import parse_csv
 import sys
+import report
 
 
 def portfolio_cost(filename):
-    compras_totais = 0.0
-    with open(filename, "rt") as f:
-        lista_dict = parse_csv(f, select=["name", "shares", "price"], types=[str, int, float])
-        lista_obj = [Stock(dici["name"], dici["shares"], dici["price"]) for dici in lista_dict]
-        compras_totais = sum([obj.cost for obj in lista_obj])
-    return compras_totais
+    '''
+    Computes the total cost (shares*price) of a portfolio file
+    '''
+    portfolio = report.read_portfolio(filename)
+    return portfolio.total_cost
 
 
 def main(args):

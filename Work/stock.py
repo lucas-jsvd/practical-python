@@ -21,8 +21,7 @@ class Stock:
 
     @property
     def cost(self):
-        self.custo = self.shares * self.price
-        return self.custo
+        return self.shares * self.price
 
     def sell(self, num_venda):
         self.shares -= num_venda
