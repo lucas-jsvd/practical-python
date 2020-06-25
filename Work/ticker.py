@@ -1,4 +1,5 @@
 import csv
+
 import report
 import tableformat
 from follow import follow
@@ -37,9 +38,10 @@ def ticker(portfile, logfile, fmt):
     rows = parse_stock_data(lines)
     rows = filter_symbols(rows, portfolio)
     formatter = tableformat.create_formatter(fmt)
-    formatter.headings(['Name','Price','Change'])
+    formatter.headings(['Name', 'Price', 'Change'])
     for row in rows:
-        formatter.row([row['name'], f"{row['price']:0.2f}", f"{row['change']:0.2f}"])
+        formatter.row(
+            [row['name'], f"{row['price']:0.2f}", f"{row['change']:0.2f}"])
 
 
 def main(args):
